@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+  <h2>{{ object.title }}</h2>
+  <img src="{{ object.image.url }}" alt="Room image" width="300">
+  <p>{{ object.description }}</p>
+  <p>Location: {{ object.location }}</p>
+  <p>Price: ${{ object.price }}</p>
+  <p>Status: {% if object.available %}Available{% else %}Booked{% endif %}</p>
+
+  {% if object.owner == user %}
+    <a href="{% url 'room_edit' object.pk %}">Edit</a> |
+    <a href="{% url 'room_delete' object.pk %}">Delete</a>
+  {% elif object.available %}
+    <form method="post" action="{% url 'booking_add' %}">
+      {% csrf_token %}
+      <input type="hidden" name="room" value="{{ object.pk }}">
+      <button type="submit">Book this room</button>
+    </form>
+  {% endif %}
+
+  <a href="{% url 'room_list' %}">Back to List</a>
+{% endblock %}
