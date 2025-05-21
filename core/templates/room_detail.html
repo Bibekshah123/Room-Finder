@@ -4,8 +4,7 @@
   <img src="{{ object.image.url }}" alt="Room image" width="300">
   <p>{{ object.description }}</p>
   <p>Location: {{ object.location }}</p>
-  <p>Price: ${{ object.price }}</p>
-  <p>Status: {% if object.available %}Available{% else %}Booked{% endif %}</p>
+  <p>Price: Rs.{{ object.price }}</p>
 
   {% if object.owner == user %}
     <a href="{% url 'room_edit' object.pk %}">Edit</a> |

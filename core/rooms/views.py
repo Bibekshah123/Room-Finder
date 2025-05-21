@@ -49,12 +49,14 @@ class LogoutView(View):
 class RoomListView(ListView):
     model = Room
     template_name = 'room_list.html'
+    context_object_name = 'rooms'
     
 class RoomCreateView( CreateView):
     model = Room
     template_name = 'room_create.html'
     form_class = RoomForm
     success_url = reverse_lazy('room_list')
+    context_object_name = 'rooms'
     
     def form_valid(self, form):
         form.instance.owner = self.request.user
@@ -65,12 +67,14 @@ class RoomCreateView( CreateView):
 class RoomDetailView(DetailView):
     model = Room
     template_name = 'room_detail.html'
+    context_object_name = 'rooms'
     
 class RoomUpdateView(UpdateView):
     model = Room
     template_name = 'room_update.html'
     form_class = RoomForm
     success_url = reverse_lazy('room_list')
+    context_object_name = 'rooms'
     
     def test_func(self):
         return self.get_object().owner == self.request.user
@@ -79,6 +83,7 @@ class RoomDeleteView(DeleteView):
     model = Room
     template_name = 'room_delete.html'
     success_url = reverse_lazy('room_list')
+    context_object_name = 'rooms'
     
     def test_func(self):
         return self.get_object().owner == self.request.user

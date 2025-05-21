@@ -1,11 +1,35 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}All Rooms{% endblock %}
+
 {% block content %}
-  <h2>Available Rooms</h2>
-  
-  {% for room in object_list %}
-    <div>
-      <h3><a href="{% url 'room_detail' room.pk %}">{{ room.title }}</a></h3>
-      <p>{{ room.location }} | Rs.{{ room.price }}</p>
+<div class="container">
+    {% for room in rooms %}
+        {% if forloop.first or forloop.counter0|divisibleby:3 %}
+        <div class="row g-4 mb-3">
+        {% endif %}
+
+        <div class="col-md-4">
+            <div class="card h-100 ">
+                <a href="{% url 'room_detail' room.pk %}">
+                    <img src="{% if room.image %}{{ room.image.url }}{% else %}https://via.placeholder.com/300x180{% endif %}" 
+                         class="card-img-top" 
+                         alt="{{ room.title }}" 
+                         style="height: 180px; object-fit: cover;">
+                </a>
+                <div class="card-body text-dark">
+                    <p class="card-text">
+                        <small>By {{ room.owner.username }} on {{ room.created_at|date:"M d, Y" }}</small>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        {% if forloop.counter|divisibleby:3 or forloop.last %}
+        </div>
+        {% endif %}
+        {% endfor %}
     </div>
-  {% endfor %}
+
 {% endblock %}
