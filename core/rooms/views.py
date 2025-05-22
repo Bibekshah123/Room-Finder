@@ -6,6 +6,8 @@ from .models import *
 from .forms import *
 from django.contrib.auth import authenticate, login, logout
 from django.views import View
+from django.http import HttpResponse
+
 
 # Create your views here.
 
@@ -103,4 +105,16 @@ class BookingCreateView(CreateView):
         return super().form_valid(form)
 
     
+class MyroomView(ListView):
+    model = Room
+    template_name = 'myrooms.html'
+    context_object_name = 'myrooms'
+    
+
+    
+
+class MybookingsView(View):
+    model = Room
+    template_name = 'mybookings.html'
+    context_object_name = 'mybookings'
     
