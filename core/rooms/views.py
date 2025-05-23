@@ -7,6 +7,10 @@ from .forms import *
 from django.contrib.auth import authenticate, login, logout
 from django.views import View
 from django.http import HttpResponse
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
+from django.contrib import messages
 
 
 # Create your views here.
@@ -38,7 +42,7 @@ class LoginView(View):
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
-                return redirect('room_list')
+                return redirect('home')
         return render(request, 'registration/login.html', {'form': form})
     
 class LogoutView(View):
@@ -46,14 +50,17 @@ class LogoutView(View):
         logout(request)
         return redirect('room_list')
 
+class HomeView(View):
+    def get(self, request):
+        return render(request, 'home.html')
     
-    
+        
 class RoomListView(ListView):
     model = Room
     template_name = 'room_list.html'
     context_object_name = 'rooms'
     
-class RoomCreateView( CreateView):
+class RoomCreateView(LoginRequiredMixin, CreateView):
     model = Room
     template_name = 'room_create.html'
     form_class = RoomForm
@@ -65,13 +72,13 @@ class RoomCreateView( CreateView):
         return super().form_valid(form)
     
 
-
 class RoomDetailView(DetailView):
     model = Room
     template_name = 'room_detail.html'
     context_object_name = 'rooms'
     
-class RoomUpdateView(UpdateView):
+    
+class RoomUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Room
     template_name = 'room_update.html'
     form_class = RoomForm
@@ -81,7 +88,7 @@ class RoomUpdateView(UpdateView):
     def test_func(self):
         return self.get_object().owner == self.request.user
     
-class RoomDeleteView(DeleteView):
+class RoomDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Room
     template_name = 'room_delete.html'
     success_url = reverse_lazy('room_list')
@@ -91,7 +98,7 @@ class RoomDeleteView(DeleteView):
         return self.get_object().owner == self.request.user
     
     
-class BookingCreateView(CreateView):
+class BookingCreateView(LoginRequiredMixin, CreateView):
     model = Booking
     form_class = BookingForm
     template_name = 'booking.html'
@@ -105,16 +112,31 @@ class BookingCreateView(CreateView):
         return super().form_valid(form)
 
     
-class MyroomView(ListView):
-    model = Room
-    template_name = 'myrooms.html'
-    context_object_name = 'myrooms'
-    
+@method_decorator(login_required, name='dispatch')
+class BookRoomView(View):
+    def post(self, request):
+        room_id = request.POST.get('room')
+        room = get_object_or_404(Room, pk=room_id)
 
-    
+        if room.owner == request.user:
+            messages.error(request, "You cannot book your own room.")
+            return redirect('room_detail', pk=room_id)
 
-class MybookingsView(View):
-    model = Room
-    template_name = 'mybookings.html'
-    context_object_name = 'mybookings'
-    
+        if not room.available:
+            messages.error(request, "This room is already booked.")
+            return redirect('room_detail', pk=room_id)
+
+        Booking.objects.create(user=request.user, room=room)
+        room.available = False
+        room.save()
+        messages.success(request, "Room booked successfully!")
+        return redirect('my_bookings')
+
+        
+
+
+@method_decorator(login_required, name='dispatch')
+class MyBookingsView(View):
+    def get(self, request):
+        bookings = Booking.objects.filter(user=request.user).select_related('room')
+        return render(request, 'my_bookings.html', {'bookings': bookings})

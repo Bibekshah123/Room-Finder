@@ -1,1 +1,28 @@
-<h1>my booking</h1>
+{% extends 'base.html' %}
+{% block title %}My Bookings{% endblock %}
+{% block content %}
+<div class="container mt-5">
+  <h2 class="mb-4">My Bookings</h2>
+
+  {% if bookings %}
+    <div class="row">
+      {% for booking in bookings %}
+        <div class="col-md-4 mb-4">
+          <div class="card">
+            <img src="{{ booking.room.image.url }}" class="card-img-top" alt="Room Image" style="height: 200px; object-fit: cover;">
+            <div class="card-body">
+              <h5 class="card-title">{{ booking.room.title }}</h5>
+              <p class="card-text">{{ booking.room.location }}</p>
+              <p class="card-text"><strong>Rs.{{ booking.room.price }}</strong></p>
+              <p class="text-muted">Booked on {{ booking.booked_at|date:"F d, Y" }}</p>
+              <a href="{% url 'room_detail' booking.room.pk %}" class="btn btn-outline-primary btn-sm">View Room</a>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p>You haven't booked any rooms yet.</p>
+  {% endif %}
+</div>
+{% endblock %}

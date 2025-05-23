@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Welcome to Room Finder{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="py-5 bg-light text-dark">
+  <div class="container text-center">
+    <h1 class="display-4 fw-bold">Find Your Perfect Room</h1>
+    <p class="lead">A smart and easy way to discover rooms for rent near you.</p>
+    <a href="{% url 'room_list' %}" class="btn btn-primary btn-lg mt-3">Browse Rooms</a>
+  </div>
+</section>
+
+<!-- Features Section -->
+<section class="py-5 bg-white">
+  <div class="container">
+    <div class="row text-center">
+      <div class="col-md-4">
+        <i class="bi bi-house-door-fill fs-1 text-primary mb-3"></i>
+        <h4>List Your Room</h4>
+        <p>Owners can easily add and manage rooms with pictures, location, and price details.</p>
+      </div>
+      <div class="col-md-4">
+        <i class="bi bi-search fs-1 text-success mb-3"></i>
+        <h4>Find a Room</h4>
+        <p>Browse through a curated list of available rooms and pick what suits you best.</p>
+      </div>
+      <div class="col-md-4">
+        <i class="bi bi-calendar-check-fill fs-1 text-danger mb-3"></i>
+        <h4>Book Instantly</h4>
+        <p>Secure your preferred room quickly with a simple booking system.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Featured Rooms (optional dynamic) -->
+<section class="py-5 bg-light">
+  <div class="container">
+    <h3 class="text-center mb-4">Featured Rooms</h3>
+    <div class="row">
+      {% for room in featured_rooms %}
+      <div class="col-md-4 mb-4">
+        <div class="card shadow-sm">
+          <img src="{{ room.image.url }}" class="card-img-top" alt="{{ room.title }}" style="height: 200px; object-fit: cover;">
+          <div class="card-body">
+            <h5 class="card-title">{{ room.title }}</h5>
+            <p class="card-text">Rs. {{ room.price }} - {{ room.location }}</p>
+            <a href="{% url 'room_detail' room.pk %}" class="btn btn-outline-primary btn-sm">View Details</a>
+          </div>
+        </div>
+      </div>
+      {% empty %}
+        <p class="text-center">No featured rooms available at the moment.</p>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}

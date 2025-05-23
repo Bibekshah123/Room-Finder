@@ -1,0 +1,40 @@
+<footer class="bg-dark text-white pt-4 pb-3 mt-auto ">
+  <div class="container">
+    <div class="row">
+
+      <!-- Logo and About -->
+      <div class="col-md-4 mb-3">
+        <h5>RoomFinder</h5>
+        <p class="small">Helping you find the best rental rooms with ease. Trusted by homeowners and renters alike.</p>
+      </div>
+
+      <!-- Quick Links -->
+      <div class="col-md-4 mb-3">
+        <h5>Quick Links</h5>
+        <ul class="list-unstyled small">
+          <li><a href="{% url 'home' %}" class="text-white text-decoration-none">Home</a></li>
+          <li><a href="{% url 'room_list' %}" class="text-white text-decoration-none">Browse Rooms</a></li>
+          {% if user.is_authenticated %}
+            <li><a href="{% url 'room_add' %}" class="text-white text-decoration-none">Add Room</a></li>
+            <li><a href="{% url 'logout' %}" class="text-white text-decoration-none">Logout</a></li>
+          {% else %}
+            <li><a href="{% url 'login' %}" class="text-white text-decoration-none">Login</a></li>
+            <li><a href="{% url 'register' %}" class="text-white text-decoration-none">Register</a></li>
+          {% endif %}
+        </ul>
+      </div>
+
+      <!-- Contact -->
+      <div class="col-md-4 mb-3">
+        <h5>Contact Us</h5>
+        <p class="small mb-1">Email: support@roomfinder.com</p>
+        <p class="small mb-0">Phone: +977 9800000000</p>
+      </div>
+
+    </div>
+
+    <div class="text-center pt-3 border-top border-secondary mt-3 small">
+      &copy; {{ now|default:2025 }} RoomFinder. All rights reserved.
+    </div>
+  </div>
+</footer>
