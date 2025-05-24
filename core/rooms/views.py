@@ -126,7 +126,9 @@ class BookRoomView(View):
             messages.error(request, "This room is already booked.")
             return redirect('room_detail', pk=room_id)
 
+        # ✅ Set user explicitly here
         Booking.objects.create(user=request.user, room=room)
+
         room.available = False
         room.save()
         messages.success(request, "Room booked successfully!")
@@ -135,8 +137,10 @@ class BookRoomView(View):
         
 
 
-@method_decorator(login_required, name='dispatch')
-class MyBookingsView(View):
-    def get(self, request):
-        bookings = Booking.objects.filter(user=request.user).select_related('room')
-        return render(request, 'my_bookings.html', {'bookings': bookings})
+class MyBookingsView(LoginRequiredMixin, ListView):
+    model = Booking
+    template_name = 'rooms/myookings.html' 
+    context_object_name = 'bookings'
+
+    def get_queryset(self):
+        return Booking.objects.filter(user=self.request.user).select_related('room').order_by('-booked_at')
