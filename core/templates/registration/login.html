@@ -6,7 +6,7 @@
     <div class="row justify-content-center">
         <div class="col-md-6">
             <div class="card shadow-lg border-0" style="border-radius: 15px;">
-                <div class="card-header bg-primary text-white text-center" style="border-top-left-radius: 15px; border-top-right-radius: 15px;">
+                <div class="card-header bg-dark text-white text-center" style="border-top-left-radius: 15px; border-top-right-radius: 15px;">
                     <h4 class="my-2">Login to Your Account</h4>
                 </div>
                 <div class="card-body p-4">
@@ -27,7 +27,9 @@
                                 <div class="text-danger">{{ form.password.errors }}</div>
                             {% endif %}
                         </div>
-                        <button type="submit" class="btn btn-primary w-100">Login</button>
+                        <div class="text-center mt-3">
+                        <button type="submit" class="btn btn-primary mt-2">Login</button>
+                        </div>
                     </form>
 
                     <div class="text-center mt-3">

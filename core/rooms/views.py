@@ -139,8 +139,8 @@ class BookRoomView(View):
 
 class MyBookingsView(LoginRequiredMixin, ListView):
     model = Booking
-    template_name = 'rooms/myookings.html' 
+    template_name = 'mybookings.html' 
     context_object_name = 'bookings'
 
     def get_queryset(self):
-        return Booking.objects.filter(user=self.request.user).select_related('room').order_by('-booked_at')
+        return Booking.objects.filter(user=self.request.user)
