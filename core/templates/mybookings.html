@@ -24,5 +24,6 @@
   {% else %}
     <p>You haven't booked any rooms yet.</p>
   {% endif %}
+  <a href="{% url 'room_list' %}" class='btn btn-outline-dark'>Back</a>
 </div>
 {% endblock %}
