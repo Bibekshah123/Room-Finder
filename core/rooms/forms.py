@@ -48,7 +48,7 @@ class UserLoginForm(forms.Form):
 class RoomForm(forms.ModelForm):
     class Meta:
         model = Room
-        exclude = ['owner']
+        exclude = ['user']
         labels = {
             'title': 'Room Title',
             'description': 'Room Description',

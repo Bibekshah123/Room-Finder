@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 class Room(models.Model):
-    owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='owned_rooms')
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='rooms', blank=True, null=True)
     title = models.CharField(max_length=100)
     description = models.TextField()
     location = models.CharField(max_length=100)

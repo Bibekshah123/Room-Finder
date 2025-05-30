@@ -3,4 +3,7 @@ from .views import *
 
 urlpatterns = [
     path('room-list/', RoomListApiView.as_view()),
+    
+    #auth
+    
 ]
