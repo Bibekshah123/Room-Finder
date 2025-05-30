@@ -5,11 +5,17 @@
 
 {% block content %}
 <!-- Hero Section -->
-<section class="py-5 bg-light text-dark">
-  <div class="container text-center">
+<section class="py-5 text-white" style="
+    background-image: url('{% static 'images/img3.jpg' %}');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 20px;
+">
+  <div class="container text-center" style="background-color: rgba(0, 0, 0, 0.5); padding: 100px; border-radius: 20px;">
     <h1 class="display-4 fw-bold">Find Your Perfect Room</h1>
     <p class="lead">A smart and easy way to discover rooms for rent near you.</p>
-    <a href="{% url 'room_list' %}" class="btn btn-outline-dark btn-lg mt-3">Browse Rooms</a>
+    <a href="{% url 'room_list' %}" class="btn btn-outline-light btn-lg mt-3 h-100 d-inline-block" style="width: 600px">Browse Rooms</a>
   </div>
 </section>
 

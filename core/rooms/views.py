@@ -105,7 +105,7 @@ class BookingCreateView(LoginRequiredMixin, CreateView):
     success_url = reverse_lazy('room_list')
 
     def form_valid(self, form):
-        form.instance.renter = self.request.user
+        form.instance.user = self.request.user
         room = form.cleaned_data['room']
         room.available = False
         room.save()
@@ -118,19 +118,18 @@ class BookRoomView(View):
         room_id = request.POST.get('room')
         room = get_object_or_404(Room, pk=room_id)
 
+        # prevent self-booking
         if room.owner == request.user:
             messages.error(request, "You cannot book your own room.")
             return redirect('room_detail', pk=room_id)
 
-        if not room.available:
-            messages.error(request, "This room is already booked.")
+        # check if room is already booked by anyone
+        if Booking.objects.filter(room=room).exists():
+            messages.error(request, "This room has already been booked.")
             return redirect('room_detail', pk=room_id)
 
-        # ✅ Set user explicitly here
+        # Book the room
         Booking.objects.create(user=request.user, room=room)
-
-        room.available = False
-        room.save()
         messages.success(request, "Room booked successfully!")
         return redirect('my_bookings')
 

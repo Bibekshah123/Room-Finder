@@ -18,30 +18,24 @@
         <p><strong>Description:</strong><br> {{ object.description }}</p>
         <p><strong>Location:</strong> {{ object.location }}</p>
         <p><strong>Price:</strong> <span class="text-success">Rs.{{ object.price }}</span></p>
-        <p><strong>Status:</strong> 
-          {% if object.available %}
-            <span class="badge bg-success">Available</span>
-          {% else %}
-            <span class="badge bg-danger">Booked</span>
-          {% endif %}
-        </p>
 
         <!-- Action Buttons -->
         <div class="mt-4 d-flex flex-wrap gap-2">
-          {% if object.available and object.owner != user %}
-            <form method="post" action="{% url 'booking_add' %}">
-              {% csrf_token %}
-              <input type="hidden" name="room" value="{{ object.pk }}">
-              <button type="submit" class="btn btn-primary">Book this Room</button>
-            </form>
-          {% elif object.owner == user %}
-            <p class="text-muted"><em>You are the owner of this room.</em></p>
-          {% elif not object.available %}
-            <p class="text-danger"><strong>This room is already booked.</strong></p>
-          {% endif %}
-          <a href="{% url 'room_list' %}" class='btn btn-outline-dark'>Back</a>
-
-
+            {% if object.owner == user %}
+              <a href="{% url 'room_edit' object.pk %}" class='btn btn-primary'>Edit</a> 
+              <a href="{% url 'room_delete' object.pk %}" class='btn btn-danger'>Delete</a>
+            {% elif not object.booking_set.exists %}
+              <form method="post" action="{% url 'booking_add' %}">
+                {% csrf_token %}
+                <input type="hidden" name="room" value="{{ object.pk }}">
+                <button type="submit" class='btn btn-secondary'>Book this room</button>
+              </form>
+            {% else %}
+              <p><strong>Room Booked</strong></p>
+            {% endif %}
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+              <a href="{% url 'room_list' %}" class="btn btn-secondary">Back</a>
+            </div>
         </div>
       </div>
     </div>

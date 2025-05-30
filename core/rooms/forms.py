@@ -55,7 +55,6 @@ class RoomForm(forms.ModelForm):
             'location': 'Room Location',
             'price': 'Monthly Rent',
             'image': 'Upload Image',
-            'available': 'Is Available?',
         }
         help_texts = {
             'image': 'Upload a clear image of the room.',
@@ -80,10 +79,7 @@ class RoomForm(forms.ModelForm):
             }),
             'image': forms.ClearableFileInput(attrs={
                 'class': 'form-control'
-            }),
-            'available': forms.CheckboxInput(attrs={
-                'class': 'form-check-input'
-            }),
+            })
         }
 
         
@@ -91,3 +87,4 @@ class BookingForm(forms.ModelForm):
     class Meta:
         model = Booking
         fields = ['room']
+        exclude = ['user']
