@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}About | Room Finder{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-10">
+      <h2 class="mb-4 text-center">About Room Finder</h2>
+      <p class="lead text-muted text-center">
+        Helping you find the right room, in the right place, at the right time.
+      </p>
+      <hr>
+
+      <div class="mb-4">
+        <h4>Our Mission</h4>
+        <p>
+          Room Finder is designed to simplify the process of finding and booking rental rooms. Whether you're a student, a working professional, or a traveler, our platform allows you to discover comfortable and affordable rooms near you with just a few clicks.
+        </p>
+      </div>
+
+      <div class="mb-4">
+        <h4>How It Works</h4>
+        <ul>
+          <li>📍 <strong>Browse Rooms:</strong> View detailed listings with images, prices, and locations.</li>
+          <li>🏠 <strong>List Your Room:</strong> Property owners can easily post rooms with full control and visibility.</li>
+          <li>✅ <strong>Book Instantly:</strong> Secure your desired room quickly through our simple booking system.</li>
+        </ul>
+      </div>
+
+      <div class="mb-4">
+        <h4>Why Choose Us?</h4>
+        <ul>
+          <li>✔ Easy-to-use interface for both renters and owners.</li>
+          <li>✔ Verified listings and real-time booking status.</li>
+          <li>✔ 100% free to use — no hidden charges.</li>
+        </ul>
+      </div>
+
+      <div class="text-center mt-5">
+        <a href="{% url 'contact' %}" class="btn btn-outline-primary">Contact Us</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

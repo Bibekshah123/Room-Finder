@@ -1,8 +1,9 @@
 {% extends 'base.html' %}
 {% block title %}My Bookings{% endblock %}
 {% block content %}
-  <a href="{% url 'room_list' %}" class='btn btn-dark'>Back</a>
-
+<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+  <a href="{% url "home" %}" class='btn btn-dark'>Back</a>
+</div>
 <div class="container mt-5">
   <h2 class="mb-4">My Bookings</h2>
 

@@ -11,6 +11,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.contrib import messages
+from django.views.generic import TemplateView, CreateView
 
 
 # Create your views here.
@@ -110,6 +111,21 @@ class BookingCreateView(LoginRequiredMixin, CreateView):
         room.available = False
         room.save()
         return super().form_valid(form)
+
+class AboutPageView(TemplateView):
+    template_name = "about.html"
+
+
+def contact_view(request):
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Thank you for contacting us! We'll get back to you soon.")
+            return redirect('contact')
+    else:
+        form = ContactForm()
+    return render(request, 'contact.html', {'form': form})
 
     
 @method_decorator(login_required, name='dispatch')
