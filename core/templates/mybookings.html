@@ -4,7 +4,7 @@
 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
   <a href="{% url "home" %}" class='btn btn-dark'>Back</a>
 </div>
-<div class="container mt-5">
+<div class="container mt-1">
   <h2 class="mb-4">My Bookings</h2>
 
   {% if bookings %}
@@ -12,7 +12,9 @@
       {% for booking in bookings %}
         <div class="col-md-4 mb-4">
           <div class="card">
-            <img src="{{ booking.room.image.url }}" class="card-img-top" alt="Room Image" style="height: 200px; object-fit: cover;">
+            <a href="{% url 'room_detail' booking.room.pk %}">
+              <img src="{{ booking.room.image.url }}" class="card-img-top" alt="Room Image" style="height: 200px; object-fit: cover;">
+            </a>
             <div class="card-body">
               <h5 class="card-title">{{ booking.room.title }}</h5>
               <p class="card-text">{{ booking.room.location }}</p>

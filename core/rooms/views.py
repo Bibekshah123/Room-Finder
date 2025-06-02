@@ -12,6 +12,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.contrib import messages
 from django.views.generic import TemplateView, CreateView
+from django.views.generic.edit import FormView
 
 
 # Create your views here.
@@ -57,6 +58,7 @@ class HomeView(View):
     
         
 class RoomListView(ListView):
+    paginate_by = 6
     model = Room
     template_name = 'room_list.html'
     context_object_name = 'rooms'
@@ -113,19 +115,20 @@ class BookingCreateView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 class AboutPageView(TemplateView):
+    model = About
     template_name = "about.html"
 
 
-def contact_view(request):
-    if request.method == 'POST':
-        form = ContactForm(request.POST)
-        if form.is_valid():
-            form.save()
-            messages.success(request, "Thank you for contacting us! We'll get back to you soon.")
-            return redirect('contact')
-    else:
-        form = ContactForm()
-    return render(request, 'contact.html', {'form': form})
+class ContactView(FormView):
+    template_name = 'contact.html'
+    form_class = ContactForm
+    success_url = reverse_lazy('room_list') 
+
+    def form_valid(self, form):
+        form.save()
+        messages.success(self.request, "Thank you for contacting us! We'll get back to you soon.")
+        return super().form_valid(form)
+    
 
     
 @method_decorator(login_required, name='dispatch')

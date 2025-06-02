@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils import timezone
+
 # Create your models here.
 
 class Room(models.Model):
@@ -16,7 +18,7 @@ class Room(models.Model):
 class Booking(models.Model):
     room = models.ForeignKey(Room, on_delete=models.CASCADE, blank=True, null=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
-    booked_on = models.DateTimeField(auto_now_add=True, null=True, blank=True) 
+    booked_on = models.DateTimeField(auto_now_add=True, blank=True, null=True) 
     
     def __str__(self):
         return f"{self.user.username} booked {self.room.title}"
