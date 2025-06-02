@@ -23,7 +23,7 @@
             <p class="mb-1 text-muted">{{ room.location }}</p>
             <p class="mb-1"><strong>Rs.{{ room.price }}</strong></p>
             <p class="card-text">
-              <small class="text-muted">By {{ room.owner.username }} on {{ room.created_at|date:"M d, Y" }}</small>
+              <small class="text-muted">By {{ room.owner.username }} on {{ room.created_at|date:"d M, Y" }}</small>
             </p>
             <a href="{% url 'room_detail' room.pk %}" class="btn btn-sm btn-outline-dark w-100">Details</a>
           </div>
@@ -33,7 +33,6 @@
       <p class="text-center">No rooms available at the moment.</p>
     {% endfor %}
   </div>
-
 </div>
 
 {% endblock %}

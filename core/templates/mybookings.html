@@ -16,7 +16,7 @@
               <h5 class="card-title">{{ booking.room.title }}</h5>
               <p class="card-text">{{ booking.room.location }}</p>
               <p class="card-text"><strong>Rs.{{ booking.room.price }}</strong></p>
-              <p class="text-muted">Booked on {{ booking.booked_at|date:"F d, Y" }}</p>
+              <p class="text-muted">Booked on {{ booking.booked_at|date:"d M, Y" }}</p>
               <a href="{% url 'room_detail' booking.room.pk %}" class="btn btn-outline-primary btn-sm">View Room</a>
             </div>
           </div>
