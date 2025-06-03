@@ -13,7 +13,8 @@ from django.utils.decorators import method_decorator
 from django.contrib import messages
 from django.views.generic import TemplateView, CreateView
 from django.views.generic.edit import FormView
-
+from django.views.decorators.cache import cache_page
+from django.utils.decorators import method_decorator
 
 # Create your views here.
 
@@ -52,11 +53,12 @@ class LogoutView(View):
         logout(request)
         return redirect('room_list')
 
+# @method_decorator(cache_page(60 * 15), name='dispatch')
 class HomeView(View):
     def get(self, request):
         return render(request, 'home.html')
     
-        
+# @method_decorator(cache_page(60 * 15), name='dispatch') 
 class RoomListView(ListView):
     paginate_by = 6
     model = Room
@@ -74,7 +76,7 @@ class RoomCreateView(LoginRequiredMixin, CreateView):
         form.instance.owner = self.request.user
         return super().form_valid(form)
     
-
+# @method_decorator(cache_page(60 * 15), name='dispatch')
 class RoomDetailView(DetailView):
     model = Room
     template_name = 'room_detail.html'
@@ -117,6 +119,7 @@ class BookingCreateView(LoginRequiredMixin, CreateView):
 class AboutPageView(TemplateView):
     model = About
     template_name = "about.html"
+    success_url = reverse_lazy('room_list')
 
 
 class ContactView(FormView):
