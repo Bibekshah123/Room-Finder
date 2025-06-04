@@ -1,19 +1,17 @@
-from django.urls import path
+from django.urls import path, include
 from .views import *
 from . import views
 from rest_framework.routers import DefaultRouter
 
 router = DefaultRouter()
-router.register('room', views.RoomViewSet, basename='rooms')
+router.register(r'rooms', RoomViewSet, basename='room')
+router.register(r'bookings', BookingViewSet, basename='booking')
 
 urlpatterns = [
-    # path('room-list/', RoomListApiView.as_view()),
-    # path('room-add/', RoomCreateApiView.as_view()),
-    
-    
-    #auth
-    
-] + router.urls
+    path('', include(router.urls)),
+]
+
+
 
 
 

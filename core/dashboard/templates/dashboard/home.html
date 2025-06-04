@@ -1,0 +1,9 @@
+{% extends 'dashboard/base_dashboard.html' %}
+{% block content %}
+  <h2>Welcome to Room Finder Admin Dashboard</h2>
+  <ul class="dashboard-modules">
+    <li><a href="{% url 'dashboard_rooms' %}">Rooms</a></li>
+    <li><a href="{% url 'dashboard_bookings' %}">Bookings</a></li>
+    <li><a href="{% url 'dashboard_users' %}">Users</a></li>
+  </ul>
+{% endblock %}

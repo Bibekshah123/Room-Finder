@@ -1,18 +1,31 @@
 from rest_framework import serializers
 from rooms.models import *
+from django.contrib.auth.models import User
 
-class RoomListSerializer(serializers.ModelSerializer):
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['id', 'username', 'email']
+        
+class RegisterSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['username', 'password']
+
+
+class RoomSerializer(serializers.ModelSerializer):
+    owner = UserSerializer(read_only=True)
+    
     class Meta:
         model = Room
-        fields = ['id', 'title', 'description', 'location', 'price']
+        fields = '__all__'
         
-class RoomCreateSerializer(serializers.ModelSerializer):
+
+class BookingSerializer(serializers.ModelSerializer):
+    # user = UserSerializer(read_only=True)
+    # room = RoomSerializer(read_only=True)
+    
     class Meta:
-        model = Room
-        fields = ['id', 'title', 'description', 'location', 'price', 'image']
-        
-        
-# class Booking(serializers.ModelSerializer):
-#     class Meta:
-#         models = Booking
-#         fields = ['id', ]
+        model = Booking           
+        fields = '__all__' 
