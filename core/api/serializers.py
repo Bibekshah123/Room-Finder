@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['id', 'username', 'email']
+        fields = ['id', 'username', 'email', 'password']
         
 class RegisterSerializer(serializers.ModelSerializer):
     class Meta:
@@ -15,16 +15,17 @@ class RegisterSerializer(serializers.ModelSerializer):
 
 
 class RoomSerializer(serializers.ModelSerializer):
-    owner = UserSerializer(read_only=True)
     
     class Meta:
         model = Room
         fields = '__all__'
+        read_only_fields = ['owner']
+        
         
 
 class BookingSerializer(serializers.ModelSerializer):
-    # user = UserSerializer(read_only=True)
-    # room = RoomSerializer(read_only=True)
+    user = UserSerializer(read_only=True)
+    room = RoomSerializer(read_only=True)
     
     class Meta:
         model = Booking           
