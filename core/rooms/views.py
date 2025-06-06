@@ -15,6 +15,7 @@ from django.views.generic import TemplateView, CreateView
 from django.views.generic.edit import FormView
 from django.views.decorators.cache import cache_page
 from django.utils.decorators import method_decorator
+from django.db.models import Q
 
 # Create your views here.
 
@@ -64,6 +65,20 @@ class RoomListView(ListView):
     model = Room
     template_name = 'room_list.html'
     context_object_name = 'rooms'
+    
+    def get_queryset(self):
+        query = self.request.GET.get('q')
+        rooms = Room.objects.all()
+        if query:
+            rooms = rooms.filter(
+                Q(title__icontains=query) | Q(location__icontains=query)
+            )
+        return rooms
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['query'] = self.request.GET.get('q', '')
+        return context
     
 class RoomCreateView(LoginRequiredMixin, CreateView):
     model = Room

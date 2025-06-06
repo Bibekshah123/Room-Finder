@@ -5,6 +5,7 @@ from rest_framework.routers import DefaultRouter
 
 urlpatterns = [
     #auth
+    path('', Home.as_view()),
     path('users/', UserApiView.as_view()),
     path('register/', RegisterApiView.as_view()),
     

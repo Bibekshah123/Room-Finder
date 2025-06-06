@@ -5,7 +5,7 @@ from django.utils import timezone
 # Create your models here.
 
 class Room(models.Model):
-    owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='rooms')
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
     title = models.CharField(max_length=100, blank=True, null= True)
     description = models.TextField(blank=True, null=True)
     location = models.CharField(max_length=100, blank=True, null=True)
