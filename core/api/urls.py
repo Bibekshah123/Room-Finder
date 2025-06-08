@@ -8,6 +8,7 @@ urlpatterns = [
     path('', Home.as_view()),
     path('users/', UserApiView.as_view()),
     path('register/', RegisterApiView.as_view()),
+    path('delete/users/<int:pk>/', UserDeleteApiView.as_view()),
     
     path('rooms/', RoomListApiView.as_view()),
     path('roomdetail/<int:pk>/', RoomDetailApiview.as_view()),

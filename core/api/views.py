@@ -25,7 +25,13 @@ class Home(APIView):
 class UserApiView(generics.ListCreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    
+    permission_classes = [IsAuthenticated]
+
+class UserDeleteApiView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    permission_classes = [IsAuthenticated]
+
 class RegisterApiView(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = RegisterSerializer
