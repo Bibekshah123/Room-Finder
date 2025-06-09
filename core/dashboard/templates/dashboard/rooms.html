@@ -1,0 +1,28 @@
+{% extends 'dashboard/base.html' %}
+{% block title %}Manage Rooms{% endblock %}
+{% block content %}
+<h2 class="mb-4">All Rooms</h2>
+<table class="table table-hover table-bordered">
+  <thead class="table-dark">
+    <tr>
+      <th>Title</th>
+      <th>Location</th>
+      <th>Price</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for room in rooms %}
+    <tr>
+      <td>{{ room.title }}</td>
+      <td>{{ room.location }}</td>  
+      <td>Rs.{{ room.price }}</td>
+      <td>
+        <a href="{% url 'dashboard_room_edit' room.pk %}" class="btn btn-sm btn-outline-primary">Edit</a>
+        <a href="{% url 'dashboard_room_delete' room.pk %}" class="btn btn-sm btn-outline-danger">Delete</a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

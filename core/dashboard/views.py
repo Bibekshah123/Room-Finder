@@ -1,14 +1,33 @@
-from django.views.generic import TemplateView, ListView
+from django.views.generic import TemplateView, ListView, UpdateView, DeleteView
 from django.contrib.auth.models import User
 from rooms.models import Room, Booking
+from django.urls import reverse_lazy
 
 class DashboardHomeView(TemplateView):
     template_name = 'dashboard/home.html'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['total_rooms'] = Room.objects.count()
+        context['total_bookings'] = Booking.objects.count()
+        context['total_users'] = User.objects.count()
+        return context
 
 class DashboardRoomsView(ListView):
     model = Room
     template_name = 'dashboard/rooms.html'
     context_object_name = 'rooms'
+    
+class DashboardRoomUpdateView(UpdateView):
+    model = Room
+    fields = ['title', 'description', 'location', 'price', 'image']
+    template_name = 'dashboard/dashboard_room_edit.html'
+    success_url = reverse_lazy('dashboard_rooms')
+    
+class DashboardRoomDeleteView(DeleteView):
+    model = Room
+    template_name = 'dashboard/dashboard_room_delete.html'
+    success_url = reverse_lazy('dashboard_rooms')
 
 class DashboardBookingsView(ListView):
     model = Booking

@@ -1,0 +1,10 @@
+{% extends 'dashboard/base.html' %}
+{% block content %}
+<div class="container mt-5">
+  <h2>Delete Room</h2>
+    <p> delete this room  <strong>{{room.title}}</strong> </p>
+    <button type="submit" class="btn btn-primary">Delete</button>
+    <a href="{% url 'dashboard_rooms' %}" class="btn btn-secondary">Cancel</a>
+  </form>
+</div>
+{% endblock %}

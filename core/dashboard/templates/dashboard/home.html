@@ -1,9 +1,35 @@
-{% extends 'dashboard/base_dashboard.html' %}
+{% extends 'dashboard/base.html' %}
+{% block title %}Dashboard Home{% endblock %}
 {% block content %}
-  <h2>Welcome to Room Finder Admin Dashboard</h2>
-  <ul class="dashboard-modules">
-    <li><a href="{% url 'dashboard_rooms' %}">Rooms</a></li>
-    <li><a href="{% url 'dashboard_bookings' %}">Bookings</a></li>
-    <li><a href="{% url 'dashboard_users' %}">Users</a></li>
-  </ul>
+<h2 class="mb-4">Dashboard</h2>
+<!-- dashboard/templates/dashboard/home.html -->
+<div class="container my-5">
+  <div class="row text-center">
+    <div class="col-md-4 mb-3">
+      <div class="card border-info shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">Total Rooms</h5>
+          <p class="display-6">{{ total_rooms }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 mb-3">
+      <div class="card border-success shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">Total Bookings</h5>
+          <p class="display-6">{{ total_bookings }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 mb-3">
+      <div class="card border-primary shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">Total Users</h5>
+          <p class="display-6">{{ total_users }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 {% endblock %}
