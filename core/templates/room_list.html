@@ -4,69 +4,61 @@
 {% block title %}All Rooms{% endblock %}
 
 {% block content %}
-<form method="get" action="" class="d-flex justify-content-center mb-1">
+<!-- Search Bar -->
+<form method="get" action="" class="d-flex justify-content-center mb-4">
   <input type="text" name="q" value="{{ query }}" placeholder="Search rooms..."
-         class="form-control w-50 me-2 border border-dark shadow-sm">
+         class="form-control w-50 me-2 border-dark shadow-sm">
   <button type="submit" class="btn btn-dark">Search</button>
 </form>
 
-<div class="d-grid gap-2 d-md-flex justify-content-md-end">
-<a href="{% url "home" %}" class='btn btn-dark'>Back</a>
+<!-- Back Button -->
+<div class="d-flex justify-content-end mb-3">
+  <a href="{% url "home" %}" class="btn btn-outline-dark">Back</a>
 </div>
-<div class="container my-5">
-  <div class="row g-4 ">
+
+<!-- Room Grid -->
+<div class="container">
+  <div class="row g-4">
     {% for room in rooms %}
       <div class="col-md-4">
-  <div class="card card-hover-shadow shadow h-100" style="border-radius: 15px;">
-    <a href="{% url 'room_detail' room.pk %}">
-      <img src="{% if room.image %}{{ room.image.url }}{% else %}https://via.placeholder.com/300x200{% endif %}"
-           class="card-img-top rounded-top" 
-           alt="{{ room.title }}" 
-           style="height: 200px; object-fit: cover;">
-    </a>
-    <div class="card-body">
-      <h5 class="card-title mb-2">{{ room.title }}</h5>
-      <p class="mb-1 text-muted">{{ room.location }}</p>
-      <p class="mb-1"><strong>Rs.{{ room.price }}</strong></p>
-      <p class="card-text">
-        <small class="text-muted">By {{ room.owner.username }}</small>
-      </p>
-      <a href="{% url 'room_detail' room.pk %}" class="btn btn-sm btn-outline-dark w-100">Details</a>
-    </div>
-  </div>
-</div>
+        <div class="card">
+          <a href="{% url 'room_detail' room.pk %}">
+            <img src="{{ room.image.url }}" alt="{{ room.title }}"
+                 class="img-fluid rounded-2 mb-2" style="height: 200px; width: 100%; object-fit: cover;">
+          </a>
+          <div class="card-body">
+            <h5 class="card-title">{{ room.title }}</h5>
+            <p class="card-text">Rs.{{ room.price }}</p>
+            <p><strong class="text-muted">By {{ room.owner.username }}</strong></p>
+            <div class="mt-2">
+              <a href="{% url 'room_detail' room.pk %}" class="btn btn-sm btn-outline-dark w-100">View Details</a>
+            </div>
+          </div>
+        </div>
+      </div>
     {% empty %}
       <p class="text-center">No rooms available at the moment.</p>
     {% endfor %}
   </div>
 </div>
 
+<!-- Hover Shadow Only -->
 <style>
-.card-hover-shadow:hover {
-  box-shadow: 0 0 25px rgba(0, 0, 0, 0.3) !important;
-  transform: translateY(-5px);
-  transition: all 0.5s ease;  /* Slower animation */
+.room-hover:hover {
+  background-color: #f8f9fa;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
 }
 </style>
 
-
 <!-- Pagination -->
-<!-- Stylish Pagination -->
 <nav aria-label="Page navigation" class="mt-4">
   <ul class="pagination justify-content-center">
     {% if page_obj.has_previous %}
       <li class="page-item">
-          <a class="page-link" href="?page={{ page_obj.previous_page_number }}&q={{ query }}" aria-label="Previous">
+        <a class="page-link" href="?page={{ page_obj.previous_page_number }}&q={{ query }}" aria-label="Previous">
           <span aria-hidden="true">&laquo;</span>
         </a>
       </li>
-
-      {% if page_obj.number > 3 %}
-        <li class="page-item"><a class="page-link" href="?page=1">1</a></li>
-        {% if page_obj.number > 4 %}
-          <li class="page-item disabled"><span class="page-link">…</span></li>
-        {% endif %}
-      {% endif %}
     {% endif %}
 
     {% for num in page_obj.paginator.page_range %}
@@ -74,28 +66,18 @@
         {% if page_obj.number == num %}
           <li class="page-item active"><span class="page-link">{{ num }}</span></li>
         {% else %}
-          <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+          <li class="page-item"><a class="page-link" href="?page={{ num }}&q={{ query }}">{{ num }}</a></li>
         {% endif %}
       {% endif %}
     {% endfor %}
 
     {% if page_obj.has_next %}
-      {% if page_obj.number < page_obj.paginator.num_pages|add:'-3' %}
-        <li class="page-item disabled"><span class="page-link">…</span></li>
-        <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">{{ page_obj.paginator.num_pages }}</a></li>
-      {% elif page_obj.number < page_obj.paginator.num_pages|add:'-2' %}
-        <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">{{ page_obj.paginator.num_pages }}</a></li>
-      {% endif %}
-
       <li class="page-item">
-        <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+        <a class="page-link" href="?page={{ page_obj.next_page_number }}&q={{ query }}" aria-label="Next">
           <span aria-hidden="true">&raquo;</span>
         </a>
       </li>
     {% endif %}
   </ul>
 </nav>
-
-
-
 {% endblock %}

@@ -130,6 +130,12 @@ class BookingCreateView(LoginRequiredMixin, CreateView):
         room.available = False
         room.save()
         return super().form_valid(form)
+    
+class BookingDetailView(LoginRequiredMixin, DetailView):
+    model = Booking
+    template_name = 'mybooking_detail.html'
+    context_object_name = 'bookings'
+    
 
 class AboutPageView(TemplateView):
     model = About

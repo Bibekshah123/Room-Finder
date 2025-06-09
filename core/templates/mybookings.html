@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
-{% block title %}My Bookings{% endblock %}
+{% block title %}BOOKINGS{% endblock %}
 {% block content %}
 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
   <a href="{% url "home" %}" class='btn btn-dark'>Back</a>
 </div>
 <div class="container mt-1">
-  <h2 class="mb-4">My Bookings</h2>
+  <h2 class="mb-4">BOOKINGS</h2>
 
   {% if bookings %}
     <div class="row">
@@ -18,9 +18,9 @@
             <div class="card-body">
               <h5 class="card-title">{{ booking.room.title }}</h5>
               <p class="card-text">{{ booking.room.location }}</p>
-              <p class="card-text"><strong>Rs.{{ booking.room.price }}</strong></p>
+              <p class="card-text">Rs.{{ booking.room.price }}</p>
               <p class="text-muted">Booked on {{ booking.booked_at|date:"d M, Y" }}</p>
-              <a href="{% url 'room_detail' booking.room.pk %}" class="btn btn-outline-primary btn-sm">View Room</a>
+              <a href="{% url 'booking_detail' booking.pk %}" class="btn btn-outline-primary btn-sm">View Room</a>
             </div>
           </div>
         </div>

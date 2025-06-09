@@ -3,41 +3,42 @@
 
 {% block content %}
 <div class="container my-5">
-  <div class="card shadow-lg border-0" style="background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border-radius: 20px; overflow: hidden;">
-    <div class="row g-0">
-      
-      <!-- Image -->
-      <div class="col-md-6">
-        <img src="{{ object.image.url }}" class="img-fluid h-100 w-100 object-fit-cover" alt="Room image">
-      </div>
-      
-      <!-- Room Details -->
-      <div class="col-md-6 p-4">
-        <h2 class="mb-3">{{ object.title }}</h2>
 
-        <p><strong>Description:</strong><br> {{ object.description }}</p>
-        <p><strong>Location:</strong> {{ object.location }}</p>
-        <p><strong>Price:</strong> <span class="text-success">Rs.{{ object.price }}</span></p>
+  <!-- Room Image -->
+  <div class="mb-4">
+    <img src="{{ object.image.url }}" 
+         class="img-fluid w-100 rounded shadow-sm" 
+         style="height: 400px; object-fit: cover;" 
+         alt="{{ object.title }}">
+  </div>
 
-        <!-- Action Buttons -->
-        <div class="mt-4 d-flex flex-wrap gap-2">
-            {% if object.owner == user %}
-              <a href="{% url 'room_edit' object.pk %}" class='btn btn-primary'>Edit</a> 
-              <a href="{% url 'room_delete' object.pk %}" class='btn btn-danger'>Delete</a>
-            {% elif not object.booking_set.exists %}
-              <form method="post" action="{% url 'booking_add' %}">
-                {% csrf_token %}
-                <input type="hidden" name="room" value="{{ object.pk }}">
-                <button type="submit" class='btn btn-success'>Book this room</button>
-              </form>
-            {% else %}
-              <p><strong>Room Booked</strong></p>
-            {% endif %}
-            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-              <a href="{% url 'room_list' %}" class="btn btn-secondary">Back</a>
-            </div>
-        </div>
-      </div>
+  <!-- Room Info -->
+  <div class="px-2">
+    <h1 class="mb-3 fw-bold">{{ object.title }}</h1>
+
+    <p> <strong>Description:</strong></p>
+    <p class="mb-3">{{ object.description }}</p>
+
+    <p><strong>Location:</strong> {{ object.location }}</p>
+    <p><strong>Price:</strong> <span class="text-success fw-semibold">Rs.{{ object.price }}</span></p>
+    <p><strong>Room Owner:</strong> {{ object.owner.username }}</p>
+
+    <!-- Action Buttons -->
+    <div class="mt-4 d-flex flex-wrap gap-2">
+      {% if object.owner == user %}
+        <a href="{% url 'room_edit' object.pk %}" class="btn btn-primary">Edit</a>
+        <a href="{% url 'room_delete' object.pk %}" class="btn btn-danger">Delete</a>
+      {% elif not object.booking_set.exists %}
+        <form method="post" action="{% url 'booking_add' %}">
+          {% csrf_token %}
+          <input type="hidden" name="room" value="{{ object.pk }}">
+          <button type="submit" class="btn btn-success">Book this room</button>
+        </form>
+      {% else %}
+        <p class="text-danger"><strong>This room is already booked.</strong></p>
+      {% endif %}
+
+      <a href="{% url 'room_list' %}" class="btn btn-secondary ms-auto">Back to List</a>
     </div>
   </div>
 </div>
