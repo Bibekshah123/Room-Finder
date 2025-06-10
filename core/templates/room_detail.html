@@ -21,7 +21,7 @@
 
     <p><strong>Location:</strong> {{ object.location }}</p>
     <p><strong>Price:</strong> <span class="text-success fw-semibold">Rs.{{ object.price }}</span></p>
-    <p><strong>Room Owner:</strong> {{ object.owner.username }}</p>
+    <p><strong>Room Owner: </strong> <span class="text-danger fw-bold">{{ object.owner.username }}</span></p>
 
     <!-- Action Buttons -->
     <div class="mt-4 d-flex flex-wrap gap-2">
@@ -38,7 +38,7 @@
         <p class="text-danger"><strong>This room is already booked.</strong></p>
       {% endif %}
 
-      <a href="{% url 'room_list' %}" class="btn btn-secondary ms-auto">Back to List</a>
+      <a href="{% url 'room_list' %}" class="btn btn-secondary ms-auto">Back</a>
     </div>
   </div>
 </div>

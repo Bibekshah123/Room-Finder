@@ -96,7 +96,8 @@ class RoomDetailView(DetailView):
     model = Room
     template_name = 'room_detail.html'
     context_object_name = 'rooms'
-    
+    success_url = reverse_lazy('room_detail')
+
     
 class RoomUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Room
@@ -131,10 +132,35 @@ class BookingCreateView(LoginRequiredMixin, CreateView):
         room.save()
         return super().form_valid(form)
     
-class BookingDetailView(LoginRequiredMixin, DetailView):
+class BookingsView(LoginRequiredMixin, ListView):
     model = Booking
-    template_name = 'mybooking_detail.html'
+    template_name = 'booking_list.html' 
     context_object_name = 'bookings'
+
+    def get_queryset(self):
+        return Booking.objects.filter(user=self.request.user)
+    
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     context['query'] = self.request.GET.get('q', '')
+    #     return context
+    
+class BookingDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
+    model = Booking
+    template_name = 'booking_detail.html'
+    context_object_name = 'booking'
+    success_url = reverse_lazy('booking_list')
+    
+    def test_func(self):
+        return self.get_object().user == self.request.user  # Ensure only owner can access
+
+class BookingDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Booking
+    template_name = 'booking_delete.html'
+    success_url = reverse_lazy('bookings')  # Change if needed
+
+    def test_func(self):
+        return self.get_object().user == self.request.user  # Only owner can delete
     
 
 class AboutPageView(TemplateView):
@@ -177,12 +203,3 @@ class BookRoomView(View):
         return redirect('my_bookings')
 
         
-
-
-class MyBookingsView(LoginRequiredMixin, ListView):
-    model = Booking
-    template_name = 'mybookings.html' 
-    context_object_name = 'bookings'
-
-    def get_queryset(self):
-        return Booking.objects.filter(user=self.request.user)
