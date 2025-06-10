@@ -37,13 +37,21 @@
                         <li class="nav-item">
                             <a class="nav-link text-light" href="{% url 'contact' %}">Contact</a>
                         </li>
-                        <li class="nav-item ">
-                            <strong><a class="nav-link text-primary">Hello, {{user.username}}</a></strong>
+                        <li class="nav-item dropdown">
+                        {% if user.is_authenticated %}
+                            <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="navbarProfileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="https://ui-avatars.com/api/?name={{ user.get_full_name|default:user.username }}&background=343a40&color=fff&size=32"
+                                alt="Avatar" class="rounded-circle me-2" style="width: 32px; height: 32px;">
+                            <span>{{ user.username }}</span>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarProfileDropdown">
+                            <li><a class="dropdown-item" href="{% url 'profile' %}">My Profile</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item text-danger" href="{% url 'logout' %}">Logout</a></li>
+                            </ul>
+                        {% endif %}
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-danger" href="{% url 'logout' %}">Logout</a>
-                        </li>
-                    {% else %}
+                        {% else %}
                         <li class="nav-item"> 
                           <a class="nav-link text-light " href="{% url 'login' %}">Login</a>
                         </li>
@@ -95,7 +103,8 @@
  <!-- Bootstrap JS -->
     <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
 
-        {% block extra_js %}
+
+    {% block extra_js %}
     {% endblock %}
 </body>
 {% include "footer.html" %}
