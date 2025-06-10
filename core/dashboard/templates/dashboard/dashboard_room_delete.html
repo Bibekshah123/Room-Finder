@@ -1,10 +1,23 @@
-{% extends 'dashboard/base.html' %}
+{% extends "base.html" %}
+{% block title %}Confirm Delete{% endblock %}
+
 {% block content %}
-<div class="container mt-5">
-  <h2>Delete Room</h2>
-    <p> delete this room  <strong>{{room.title}}</strong> </p>
-    <button type="submit" class="btn btn-primary">Delete</button>
-    <a href="{% url 'dashboard_rooms' %}" class="btn btn-secondary">Cancel</a>
-  </form>
+<div class="container mt-5 py-5"  style="max-width: 600px; height: 80vh; overflow-y: auto;">
+  <div class="card shadow-sm border-danger">
+    <div class="card-body text-center">
+      <h2 class="text-danger mb-3">Confirm Deletion</h2>
+      <p class="fs-5">Are you sure you want to delete <strong class="text-dark">"{{ room.title }}"</strong>?</p>
+      
+      <form method="post" class="d-inline-block mt-4">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger me-2">
+          <i class="bi bi-trash"></i> Yes, Delete
+        </button>
+        <a href="{% url 'dashboard_rooms' %}" class="btn btn-secondary">
+          <i class="bi bi-x-circle"></i> Cancel
+        </a>
+      </form>
+    </div>
+  </div>
 </div>
 {% endblock %}

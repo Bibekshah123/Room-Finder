@@ -27,8 +27,29 @@
     .main-content {
       flex-grow: 1;
       overflow-y: auto;
-      padding: 30px;
       background-color: #f8f9fa;
+    }
+    .topbar {
+      background-color: white;
+      padding: 15px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #dee2e6;
+    }
+    .profile-menu {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .profile-menu img {
+      width: 35px;
+      height: 35px;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+    .profile-menu span {
+      font-weight: 500;
     }
   </style>
 </head>
@@ -47,7 +68,25 @@
 
 <!-- Main content -->
 <div class="main-content">
-  {% block content %}{% endblock %}
+
+  <!-- Topbar -->
+  <div class="topbar">
+    <h4 class="mb-0">Welcome to Admin Panel</h4>
+    
+    {% if user.is_authenticated %}
+    <div class="profile-menu">
+      <span>{{ user.username }}</span>
+      <a href="{% url 'logout' %}" class="btn btn-sm btn-outline-danger">Logout</a>
+    </div>
+    {% else %}
+      <a href="{% url 'login' %}" class="btn btn-sm btn-dark">Login</a>
+    {% endif %}
+  </div>
+
+  <!-- Page Content -->
+  <div class="p-4">
+    {% block content %}{% endblock %}
+  </div>
 </div>
 
 </body>

@@ -66,6 +66,8 @@ class BookingDetailApiView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = BookingSerializer
     permission_classes = [IsAuthenticated]
     throttle_classes = [AnonRateThrottle, UserRateThrottle]
+    
+
   
     
   

@@ -1,7 +1,19 @@
-from django.views.generic import TemplateView, ListView, UpdateView, DeleteView
+from django.views.generic import TemplateView, ListView, UpdateView, DeleteView, CreateView, DetailView
 from django.contrib.auth.models import User
 from rooms.models import Room, Booking
 from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin
+from .forms import *
+
+class AdminDashboardView(LoginRequiredMixin, TemplateView):
+    template_name = "dashboard/dashboard.html"
+    login_url = "login"  # URL name for login page
+
+class AdminRoomListView(LoginRequiredMixin, ListView):
+    model = Room
+    template_name = "dashboard/dashboard_rooms.html"
+    context_object_name = "rooms"
+    login_url = "login"
 
 class DashboardHomeView(TemplateView):
     template_name = 'dashboard/home.html'
@@ -15,8 +27,14 @@ class DashboardHomeView(TemplateView):
 
 class DashboardRoomsView(ListView):
     model = Room
-    template_name = 'dashboard/rooms.html'
+    template_name = 'dashboard/dashboard_rooms.html'
     context_object_name = 'rooms'
+
+class DashboardRoomCreate(CreateView):
+    model = Room
+    template_name = 'dashboard/dashboard_room_create.html'
+    form_class = RoomForm
+
     
 class DashboardRoomUpdateView(UpdateView):
     model = Room
