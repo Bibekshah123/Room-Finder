@@ -63,7 +63,7 @@ class ProfileView(LoginRequiredMixin, TemplateView):
         return context
     
 
-# @method_decorator(cache_page(120), name='dispatch') 
+@method_decorator(cache_page(120), name='dispatch') 
 class HomeView(View):
     def get(self, request):
         return render(request, 'home.html')
