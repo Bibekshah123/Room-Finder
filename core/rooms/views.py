@@ -63,12 +63,12 @@ class ProfileView(LoginRequiredMixin, TemplateView):
         return context
     
 
-# @method_decorator(cache_page(60 * 15), name='dispatch')
+# @method_decorator(cache_page(120), name='dispatch') 
 class HomeView(View):
     def get(self, request):
         return render(request, 'home.html')
     
-# @method_decorator(cache_page(60 * 15), name='dispatch') 
+@method_decorator(cache_page(120), name='dispatch') 
 class RoomListView(ListView):
     paginate_by = 6
     model = Room
@@ -118,7 +118,7 @@ class RoomUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     def test_func(self):
         return self.get_object().owner == self.request.user
     
-class RoomDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+class RoomDeleteView(LoginRequiredMixin, DeleteView):
     model = Room
     template_name = 'room_delete.html'
     success_url = reverse_lazy('room_list')
@@ -141,6 +141,7 @@ class BookingCreateView(LoginRequiredMixin, CreateView):
         room.save()
         return super().form_valid(form)
     
+@method_decorator(cache_page(120), name='dispatch') 
 class BookingsView(LoginRequiredMixin, ListView):
     model = Booking
     template_name = 'booking_list.html' 
@@ -177,7 +178,7 @@ class AboutPageView(TemplateView):
     success_url = reverse_lazy('room_list')
 
 
-class ContactView(FormView):
+class ContactView(LoginRequiredMixin, FormView):
     template_name = 'contact.html'
     form_class = ContactForm
     success_url = reverse_lazy('room_list') 

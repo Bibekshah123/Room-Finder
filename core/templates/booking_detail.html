@@ -20,7 +20,7 @@
     <p class="mb-3">{{ booking.room.description }}</p>
 
     <p><strong>Location:</strong> {{ booking.room.location }}</p>
-    <p><strong>Price:</strong> <span class="text-success fw-semibold">Rs.{{ booking.room.price }}</span></p>
+    <p><strong>Price/Month:</strong> <span class="text-success fw-semibold">Rs.{{ booking.room.price }}</span></p>
     <p><strong>Room Owner: </strong> <span class="text-danger fw-bold">{{ booking.room.owner.username }}</span></p>
     <p><strong>Booked on: </strong> <span class='text-primary fw-bold'>{{ object.booked_on|date:"Y-m-d" }}</span></p>
 

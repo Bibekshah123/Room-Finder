@@ -4,67 +4,112 @@
 {% block title %}Welcome to Room Finder{% endblock %}
 
 {% block content %}
-<!-- Hero Section -->
-<section class="py-5 text-white" style="
-    background-image: url('{% static 'images/img3.jpg' %}');
+
+<style>
+  body {
+    background-image: url('https://images.pexels.com/photos/1457842/pexels-photo-1457842.jpeg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    font-family: 'Segoe UI', sans-serif;
+  }
+
+  .hero-box {
+    display: inline-block;
+    background-color: rgba(0, 0, 0, 0.6);
+    padding: 40px 60px;
     border-radius: 20px;
-">
-  <div class="container text-center py-5">
-  <div style="display: inline-block; background-color: rgba(0, 0, 0, 0.5); padding: 30px 50px; border-radius: 20px;">
-    <h1 class="display-4 fw-bold text-white">Find Your Perfect Room</h1>
-    <p class="lead text-white">A smart and easy way to discover rooms for rent near you.</p>
-    <a href="{% url 'room_list' %}" class="btn btn-outline-light btn-lg mt-3 d-inline-block" style="width: 600px;">Browse Rooms</a>
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+  }
+
+  .hero-box h1,
+  .hero-box p {
+    color: #ffffff;
+  }
+
+  .hero-btn {
+    width: 100%;
+    max-width: 600px;
+  }
+
+  .section-spacing {
+    padding: 60px 0;
+  }
+
+  .card-title {
+    font-weight: 600;
+  }
+
+  .feature-icon {
+    font-size: 3rem;
+    margin-bottom: 15px;
+  }
+
+  .card-img-top {
+    height: 200px;
+    object-fit: cover;
+    border-top-left-radius: 0.375rem;
+    border-top-right-radius: 0.375rem;
+  }
+
+  .text-shadow {
+    text-shadow: 1px 1px 5px rgba(0,0,0,0.6);
+  }
+</style>
+
+<!-- Hero Section -->
+<div class="container text-center py-5">
+  <div class="hero-box">
+    <h1 class="display-4 fw-bold text-shadow">Find Your Perfect Room</h1>
+    <p class="lead text-shadow">A smart and easy way to discover rooms for rent near you.</p>
+    <a href="{% url 'room_list' %}" class="btn btn-outline-light btn-lg mt-3 hero-btn">Browse Rooms</a>
   </div>
-</div>
 
-</section>
-
-<!-- Features Section -->
-<section class="py-5 bg-white">
-  <div class="container">
-    <div class="row text-center">
-      <div class="col-md-4">
-        <i class="bi bi-house-door-fill fs-1 text-primary mb-3"></i>
-        <h4>List Your Room</h4>
-        <p>Owners can easily add and manage rooms with pictures, location, and price details.</p>
-      </div>
-      <div class="col-md-4">
-        <i class="bi bi-search fs-1 text-success mb-3"></i>
-        <h4>Find a Room</h4>
-        <p>Browse through a curated list of available rooms and pick what suits you best.</p>
-      </div>
-      <div class="col-md-4">
-        <i class="bi bi-calendar-check-fill fs-1 text-danger mb-3"></i>
-        <h4>Book Instantly</h4>
-        <p>Secure your preferred room quickly with a simple booking system.</p>
-      </div>
+  <!-- Features Section -->
+<div class="container section-spacing text-light fw-semibold">
+  <div class="row text-center">
+    <div class="col-md-4">
+      <i class="bi bi-house-door-fill feature-icon text-primary"></i>
+      <h4>List Your Room</h4>
+      <p>Owners can easily add and manage rooms with pictures, location, and price details.</p>
+    </div>
+    <div class="col-md-4">
+      <i class="bi bi-search feature-icon text-success"></i>
+      <h4>Find a Room</h4>
+      <p>Browse through a curated list of available rooms and pick what suits you best.</p>
+    </div>
+    <div class="col-md-4">
+      <i class="bi bi-calendar-check-fill feature-icon text-danger"></i>
+      <h4>Book Instantly</h4>
+      <p>Secure your preferred room quickly with a simple booking system.</p>
     </div>
   </div>
-</section>
 
-<!-- Featured Rooms (optional dynamic) -->
-<section class="py-5 bg-light">
-  <div class="container">
-    <h3 class="text-center mb-4">Featured Rooms</h3>
-    <div class="row">
-      {% for room in featured_rooms %}
-      <div class="col-md-4 mb-4">
-        <div class="card shadow-sm">
-          <img src="{{ room.image.url }}" class="card-img-top" alt="{{ room.title }}" style="height: 200px; object-fit: cover;">
-          <div class="card-body">
-            <h5 class="card-title">{{ room.title }}</h5>
-            <p class="card-text">Rs. {{ room.price }} - {{ room.location }}</p>
-            <a href="{% url 'room_detail' room.pk %}" class="btn btn-outline-primary btn-sm">View Details</a>
-          </div>
+  <!-- Featured Rooms Section -->
+<div class="container section-spacing">
+  <h3 class="text-center mb-5 fw-semibold">Featured Rooms</h3>
+  <div class="row">
+    {% for room in featured_rooms %}
+    <div class="col-md-4 mb-4">
+      <div class="card shadow-sm h-100">
+        <img src="{{ room.image.url }}" class="card-img-top" alt="{{ room.title }}">
+        <div class="card-body d-flex flex-column justify-content-between">
+          <h5 class="card-title">{{ room.title }}</h5>
+          <p class="card-text">Rs. {{ room.price }} - {{ room.location }}</p>
+          <a href="{% url 'room_detail' room.pk %}" class="btn btn-outline-primary btn-sm mt-auto">View Details</a>
         </div>
       </div>
-      {% empty %}
-        <p class="text-center">No featured rooms available at the moment.</p>
-      {% endfor %}
     </div>
+    {% empty %}
+    <p class="text-center">No featured rooms available at the moment.</p>
+    {% endfor %}
   </div>
-</section>
+</div> 
+</div>
+</div>
+</div>
+
+
+
+
 {% endblock %}
