@@ -5,8 +5,8 @@ from django.contrib.auth import views as auth_views
 
 urlpatterns = [
 
-    path("admin-login/", auth_views.LoginView.as_view(template_name="dashboard/login.html"), name="login"),
-    path("admin-logout/", auth_views.LogoutView.as_view(next_page="login"), name="logout"),
+    path("admin-login/", auth_views.LoginView.as_view(template_name="dashboard/login.html"), name="dashboard-login"),
+    path("admin-logout/", auth_views.LogoutView.as_view(next_page="login"), name="dashboard-logout"),
 
     
     path('', DashboardHomeView.as_view(), name='dashboard_home'),

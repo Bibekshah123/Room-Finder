@@ -52,7 +52,7 @@ class LoginView(View):
 class LogoutView(View):
     def get(self, request):
         logout(request)
-        return redirect('room_list')
+        return redirect('home')
     
 class ProfileView(LoginRequiredMixin, TemplateView):
     template_name = 'profile.html'
@@ -158,7 +158,6 @@ class BookingDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
     model = Booking
     template_name = 'booking_detail.html'
     context_object_name = 'booking'
-    success_url = reverse_lazy('booking_list')
     
     def test_func(self):
         return self.get_object().user == self.request.user  # Ensure only owner can access
