@@ -1,17 +1,30 @@
 from rest_framework import serializers
 from rooms.models import *
-from django.contrib.auth.models import User
+# from django.contrib.auth.models import User
+from djoser.serializers import UserCreateSerializer
+from django.contrib.auth import get_user_model
 
+User = get_user_model()
 
-class UserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = ['id', 'username', 'email', 'password']
+# class UserCreateSerializer(UserCreateSerializer):
+#     class Meta(UserCreateSerializer.Meta):
+#         model = User
+#         fields = ('id', 'username', 'email', 'password', 're_password')
+
+# class UserSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = User
+#         fields = ['id', 'email', 'username', 'password']
+    
+# class UserSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = User
+#         fields = ['id', 'username', 'email', 'password']
         
-class RegisterSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = ['username', 'password']
+# class RegisterSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = User
+#         fields = ['username', 'password']
 
 
 class RoomSerializer(serializers.ModelSerializer):
@@ -24,7 +37,6 @@ class RoomSerializer(serializers.ModelSerializer):
         
 
 class BookingSerializer(serializers.ModelSerializer):
-    user = UserSerializer(read_only=True)
     room = RoomSerializer(read_only=True)
     
     class Meta:

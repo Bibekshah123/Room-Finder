@@ -33,11 +33,7 @@
         <form method="post" action="{% url 'booking_add' %}">
           {% csrf_token %}
           <input type="hidden" name="room" value="{{ object.pk }}">
-          {% if object.owner == user %}
           <button type="submit" class="btn btn-success">Book this room</button>
-          {% else %}
-            <p class="text-danger"><strong>Please login to book this room</strong></p>
-          {% endif %}
         </form>
       {% else %}
         <p class="text-danger"><strong>This room is already booked.</strong></p>

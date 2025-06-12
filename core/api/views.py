@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from rest_framework import generics
-from .serializers import RoomSerializer, BookingSerializer, UserSerializer, RegisterSerializer
+from .serializers import RoomSerializer, BookingSerializer
 from rooms.models import Room, Booking
 from django.contrib.auth.models import User
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
@@ -19,19 +19,19 @@ class Home(APIView):
     permission_classes = [IsAuthenticated]
     
 
-class UserApiView(generics.ListCreateAPIView):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
-    permission_classes = [IsAuthenticated]
+# class UserApiView(generics.ListCreateAPIView):
+#     queryset = User.objects.all()
+#     serializer_class = UserSerializer
+#     permission_classes = [IsAuthenticated]
 
-class UserDeleteApiView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
-    permission_classes = [IsAuthenticated]
+# class UserDeleteApiView(generics.RetrieveUpdateDestroyAPIView):
+#     queryset = User.objects.all()
+#     serializer_class = UserSerializer
+#     permission_classes = [IsAuthenticated]
 
-class RegisterApiView(generics.CreateAPIView):
-    queryset = User.objects.all()
-    serializer_class = RegisterSerializer
+# class RegisterApiView(generics.CreateAPIView):
+#     queryset = User.objects.all()
+#     serializer_class = RegisterSerializer
 
 class RoomListApiView(generics.ListCreateAPIView):
     queryset = Room.objects.all()
