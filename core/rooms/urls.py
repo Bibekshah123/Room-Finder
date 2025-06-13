@@ -25,4 +25,7 @@ urlpatterns = [
     path('contact/', ContactView.as_view(), name='contact'),
     
     path('book/', BookRoomView.as_view(), name='booking'),
+    
+    path('activate/<uid>/<token>/', activate_account, name='activate'),
+
 ]

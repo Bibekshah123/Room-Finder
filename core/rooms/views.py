@@ -16,8 +16,20 @@ from django.views.generic.edit import FormView
 from django.views.decorators.cache import cache_page
 from django.utils.decorators import method_decorator
 from django.db.models import Q
+import requests
 
 # Create your views here.
+
+def activate_account(request, uid, token):
+    response = requests.post("http://127.0.0.1:8000/auth/users/activation/", data={
+        "uid": uid,
+        "token": token
+    })
+
+    if response.status_code == 204:
+        return render(request, "activation_success.html")
+    else:
+        return render(request, "activation_failed.html")
 
 class RegisterView(View):
     def get(self, request):

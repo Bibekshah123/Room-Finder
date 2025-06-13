@@ -16,7 +16,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 class RoomListApiView(generics.ListCreateAPIView):
     queryset = Room.objects.all()
     serializer_class = RoomSerializer
-    authentication_classes = (JWTAuthentication,)
+    authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticatedOrReadOnly]
     throttle_classes = [AnonRateThrottle, UserRateThrottle]
     filter_backends = [DjangoFilterBackend]
@@ -29,7 +29,7 @@ class RoomListApiView(generics.ListCreateAPIView):
 class RoomDetailApiview(generics.RetrieveUpdateDestroyAPIView):
     queryset = Room.objects.all()
     serializer_class = RoomSerializer
-    authentication_classes = (JWTAuthentication,)
+    authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticatedOrReadOnly]
     throttle_classes = [AnonRateThrottle, UserRateThrottle]
 
@@ -37,7 +37,7 @@ class RoomDetailApiview(generics.RetrieveUpdateDestroyAPIView):
 class BookingApiView(generics.ListCreateAPIView):
     queryset = Booking.objects.all()
     serializer_class = BookingSerializer
-    authentication_classes = (JWTAuthentication,)
+    authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
     throttle_classes = [AnonRateThrottle, UserRateThrottle]
 
@@ -48,7 +48,7 @@ class BookingApiView(generics.ListCreateAPIView):
 class BookingDetailApiView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Booking.objects.all()
     serializer_class = BookingSerializer
-    authentication_classes = (JWTAuthentication,)
+    authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
     throttle_classes = [AnonRateThrottle, UserRateThrottle]
     

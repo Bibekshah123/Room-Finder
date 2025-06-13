@@ -54,24 +54,17 @@ INSTALLED_APPS = [
 ]
 
 DJOSER = {
-    # 'LOGIN_FIELD': 'email',  # Use 'username' if needed
-    # 'USER_CREATE_PASSWORD_RETYPE': True,
-    # 'USERNAME_CHANGED_EMAIL_CONFIRMATION': False,
-    # 'PASSWORD_CHANGED_EMAIL_CONFIRMATION': False,
-    # 'SEND_ACTIVATION_EMAIL' : True,
-    # 'SEND_CONFIRMATION_EMAIL': True,
-    # 'SET_USERNAME_RETYPE': True,
-    # 'SET_PASSWORD_RETYPE': True,
-    # 'PASSWORD_CHANGED_EMAIL_CONFIRMATION' : True,
-    # 'PASSWORD_RESET_CONFIRM_URL': 'password/reset/confirm/{uid}/{token}',
-    # 'PASSWORD_RESET_SHOW_EMAIL_NOT_FOUND' : True,
-    # 'TOKEN_MODEL' : None,
-    # 'ACTIVATION_URL': 'activate/{uid}/{token}',
-    # # 'USERNAME_FIELD': 'email',
+    'SEND_ACTIVATION_EMAIL': True,
+    'ACTIVATION_URL': 'activate/{uid}/{token}/',  # frontend url to handle activation
+    'USER_CREATE_PASSWORD_RETYPE': True,
+    'LOGIN_FIELD': 'email',
     'SERIALIZERS': {
-        'user_create' : 'api.serializers.UserCreateSerializer'
-        },
+        'user_create': 'djoser.serializers.UserCreateSerializer',
+        'user': 'djoser.serializers.UserSerializer',
+        'current_user': 'djoser.serializers.UserSerializer',
+    },
 }
+
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
@@ -222,7 +215,7 @@ CORS_ALLOWED_ORIGINS = [
 ]
 
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'  # SMTP server host
 EMAIL_PORT = 587  # SMTP server port (587 for TLS, 465 for SSL)
 EMAIL_USE_TLS = True  # True for TLS, False for SSL
