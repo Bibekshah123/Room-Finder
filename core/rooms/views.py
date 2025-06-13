@@ -68,7 +68,7 @@ class HomeView(View):
     def get(self, request):
         return render(request, 'home.html')
     
-@method_decorator(cache_page(120), name='dispatch') 
+# @method_decorator(cache_page(120), name='dispatch') 
 class RoomListView(ListView):
     paginate_by = 6
     model = Room
@@ -141,7 +141,7 @@ class BookingCreateView(LoginRequiredMixin, CreateView):
         room.save()
         return super().form_valid(form)
     
-@method_decorator(cache_page(120), name='dispatch') 
+# @method_decorator(cache_page(120), name='dispatch') 
 class BookingsView(LoginRequiredMixin, ListView):
     model = Booking
     template_name = 'booking_list.html' 
@@ -190,7 +190,7 @@ class ContactView(LoginRequiredMixin, FormView):
     
 
     
-@method_decorator(login_required, name='dispatch')
+# @method_decorator(login_required, name='dispatch')
 class BookRoomView(View):
     def post(self, request):
         room_id = request.POST.get('room')

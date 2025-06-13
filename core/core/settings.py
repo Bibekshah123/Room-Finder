@@ -47,28 +47,30 @@ INSTALLED_APPS = [
     'django_filters',
     'djoser',
     'corsheaders',
-    # 'rest_framework.authtoken',
+    'rest_framework.authtoken',
     'rest_framework_simplejwt',
 
 
 ]
 
 DJOSER = {
-    'LOGIN_FIELD': 'email',  # Use 'username' if needed
-    'USER_CREATE_PASSWORD_RETYPE': True,
-    'USERNAME_CHANGED_EMAIL_CONFIRMATION': False,
-    'PASSWORD_CHANGED_EMAIL_CONFIRMATION': False,
-    'SEND_ACTIVATION_EMAIL' : True,
-    'SEND_CONFIRMATION_EMAIL': True,
-    'SET_USERNAME_RETYPE': True,
-    'SET_PASSWORD_RETYPE': True,
-    'PASSWORD_CHANGED_EMAIL_CONFIRMATION' : True,
-    'PASSWORD_RESET_CONFIRM_URL': 'password/reset/confirm/{uid}/{token}',
-    'PASSWORD_RESET_SHOW_EMAIL_NOT_FOUND' : True,
-    'TOKEN_MODEL' : None,
-    'ACTIVATION_URL': 'activate/{uid}/{token}',
-    # 'USERNAME_FIELD': 'email',
-    'SERIALIZERS': {},
+    # 'LOGIN_FIELD': 'email',  # Use 'username' if needed
+    # 'USER_CREATE_PASSWORD_RETYPE': True,
+    # 'USERNAME_CHANGED_EMAIL_CONFIRMATION': False,
+    # 'PASSWORD_CHANGED_EMAIL_CONFIRMATION': False,
+    # 'SEND_ACTIVATION_EMAIL' : True,
+    # 'SEND_CONFIRMATION_EMAIL': True,
+    # 'SET_USERNAME_RETYPE': True,
+    # 'SET_PASSWORD_RETYPE': True,
+    # 'PASSWORD_CHANGED_EMAIL_CONFIRMATION' : True,
+    # 'PASSWORD_RESET_CONFIRM_URL': 'password/reset/confirm/{uid}/{token}',
+    # 'PASSWORD_RESET_SHOW_EMAIL_NOT_FOUND' : True,
+    # 'TOKEN_MODEL' : None,
+    # 'ACTIVATION_URL': 'activate/{uid}/{token}',
+    # # 'USERNAME_FIELD': 'email',
+    'SERIALIZERS': {
+        'user_create' : 'api.serializers.UserCreateSerializer'
+        },
 }
 
 REST_FRAMEWORK = {
@@ -89,8 +91,10 @@ SIMPLE_JWT = {
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
     "ROTATE_REFRESH_TOKENS": True,
     "BLACKLIST_AFTER_ROTATION": True,
-    "AUTH_HEADER_TYPES": ("JWT",),
+    "AUTH_HEADER_TYPES": ("Bearer",),
 }
+
+
 
 MIDDLEWARE = [
     # 'whitenoise.middleware.WhiteNoiseMiddleware',
@@ -225,4 +229,4 @@ EMAIL_USE_TLS = True  # True for TLS, False for SSL
 EMAIL_HOST_USER = 'bibekshah995@gmail.com'  # SMTP server username
 EMAIL_HOST_PASSWORD = 'kzjz rowd wdnm dzcz'  # SMTP server password
 EMAIL_USE_SSL = False  # Set to True if using SSL
-DEFAULT_FROM_EMAIL = 'your_email@example.com'  # Default sender email address
+DEFAULT_FROM_EMAIL = 'your_email@example.com'  # Default sender email address   

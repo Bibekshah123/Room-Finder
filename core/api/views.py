@@ -13,29 +13,10 @@ from django_filters.rest_framework import DjangoFilterBackend
 
 
 # Create your views here.
-
-class Home(APIView):
-    authentication_classes = [JWTAuthentication]
-    permission_classes = [IsAuthenticated]
-    
-
-# class UserApiView(generics.ListCreateAPIView):
-#     queryset = User.objects.all()
-#     serializer_class = UserSerializer
-#     permission_classes = [IsAuthenticated]
-
-# class UserDeleteApiView(generics.RetrieveUpdateDestroyAPIView):
-#     queryset = User.objects.all()
-#     serializer_class = UserSerializer
-#     permission_classes = [IsAuthenticated]
-
-# class RegisterApiView(generics.CreateAPIView):
-#     queryset = User.objects.all()
-#     serializer_class = RegisterSerializer
-
 class RoomListApiView(generics.ListCreateAPIView):
     queryset = Room.objects.all()
     serializer_class = RoomSerializer
+    authentication_classes = (JWTAuthentication,)
     permission_classes = [IsAuthenticatedOrReadOnly]
     throttle_classes = [AnonRateThrottle, UserRateThrottle]
     filter_backends = [DjangoFilterBackend]
@@ -43,10 +24,12 @@ class RoomListApiView(generics.ListCreateAPIView):
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
+        
     
 class RoomDetailApiview(generics.RetrieveUpdateDestroyAPIView):
     queryset = Room.objects.all()
     serializer_class = RoomSerializer
+    authentication_classes = (JWTAuthentication,)
     permission_classes = [IsAuthenticatedOrReadOnly]
     throttle_classes = [AnonRateThrottle, UserRateThrottle]
 
@@ -54,6 +37,7 @@ class RoomDetailApiview(generics.RetrieveUpdateDestroyAPIView):
 class BookingApiView(generics.ListCreateAPIView):
     queryset = Booking.objects.all()
     serializer_class = BookingSerializer
+    authentication_classes = (JWTAuthentication,)
     permission_classes = [IsAuthenticated]
     throttle_classes = [AnonRateThrottle, UserRateThrottle]
 
@@ -64,6 +48,7 @@ class BookingApiView(generics.ListCreateAPIView):
 class BookingDetailApiView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Booking.objects.all()
     serializer_class = BookingSerializer
+    authentication_classes = (JWTAuthentication,)
     permission_classes = [IsAuthenticated]
     throttle_classes = [AnonRateThrottle, UserRateThrottle]
     
