@@ -19,9 +19,9 @@
     <p> <strong>Description:</strong></p>
     <p class="mb-3">{{ object.description }}</p>
 
-    <p><strong>Location:</strong> <span class="text-warning fw-semibold"> {{ object.location }}</span></p>
-    <p><strong>Price/Month:</strong> <span class="text-success fw-semibold">Rs.{{ object.price }}</span></p>
-    <p><strong>Room Owner: </strong> <span class="text-danger fw-semibold">{{ object.owner.username }}</span></p>
+    <p><strong>Location:</strong> <span class="text-primary fw-semibold"> {{ object.location }}</span></p>
+    <p><strong>Price/Month:</strong> <span class="text-primary fw-semibold">Rs.{{ object.price }}</span></p>
+    <p><strong>Room Owner: </strong> <span class="text-primary fw-semibold">{{ object.owner.username }}</span></p>
     <p><strong>Date: </strong> <span class="text-primary fw-semibold"> {{object.date|date:"Y-m-d"}}</span></p>
 
     <!-- Action Buttons -->
@@ -36,9 +36,9 @@
           <button type="submit" class="btn btn-success">Book this room</button>
         </form>
       {% else %}
+        {% comment %} <p class="text-danger"><strong>please login to book this room.</strong></p> {% endcomment %}
         <p class="text-danger"><strong>This room is already booked.</strong></p>
       {% endif %}
-
       <a href="{% url 'room_list' %}" class="btn btn-secondary ms-auto">Back</a>
     </div>
   </div>
