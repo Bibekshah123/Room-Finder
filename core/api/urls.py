@@ -17,7 +17,6 @@ urlpatterns = [
     path('bookings/', BookingApiView.as_view()),
     path('bookingsdetail/<int:pk>/', BookingDetailApiView.as_view()),
     
-
 ]
 
 

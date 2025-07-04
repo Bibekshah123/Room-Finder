@@ -26,25 +26,29 @@
 
     <!-- Action Buttons -->
     <div class="mt-4 d-flex flex-wrap gap-2">
-      {% if object.owner == user %}
-        <a href="{% url 'room_edit' object.pk %}" class="btn btn-primary">Edit</a>
-        <a href="{% url 'room_delete' object.pk %}" class="btn btn-danger">Delete</a>
-      {% elif not object.booking_set.exists %}
-        <form method="post" action="{% url 'booking_add' %}">
-          {% csrf_token %}
-          <input type="hidden" name="room" value="{{ object.pk }}">
-          <button type="submit" class="btn btn-success">Book this room</button>
-        </form>
+      {% if user.is_authenticated %}
+        {% if object.owner == user %}
+          <a href="{% url 'room_edit' object.pk %}" class="btn btn-primary">Edit</a>
+          <a href="{% url 'room_delete' object.pk %}" class="btn btn-danger">Delete</a>
+        {% elif not object.booking_set.exists %}
+          <form method="post" action="{% url 'booking_add' %}">
+            {% csrf_token %}
+            <input type="hidden" name="room" value="{{ object.pk }}">
+            <button type="submit" class="btn btn-success">Book this room</button>
+          </form>
+        {% else %}
+          <p class="text-danger"><strong>This room is already booked.</strong></p>
+        {% endif %}
       {% else %}
-        {% comment %} <p class="text-danger"><strong>please login to book this room.</strong></p> {% endcomment %}
-        <p class="text-danger"><strong>This room is already booked.</strong></p>
+        <p class="text-info"><strong>Please <a href="{% url 'login' %}">login</a> to book this room.</strong></p>
       {% endif %}
+
       <a href="{% url 'room_list' %}" class="btn btn-secondary ms-auto">Back</a>
     </div>
-  </div>
-</div>
+
 
 <style>
   background : linear-gradient(135deg, #74ebd5 0%, #ACB6E5 100%);
 </style>
+
 {% endblock %}
