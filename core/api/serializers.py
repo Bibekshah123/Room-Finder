@@ -10,7 +10,6 @@ class UserCreateSerializer(BaseUserCreateSerializer):
     class Meta(BaseUserCreateSerializer.Meta):
         fields = ['id', 'username', 'email', 'password']
 
-
 class RoomSerializer(serializers.ModelSerializer):
     
     class Meta:
@@ -18,8 +17,6 @@ class RoomSerializer(serializers.ModelSerializer):
         fields = '__all__'
         read_only_fields = ['owner']
         
-        
-
 class BookingSerializer(serializers.ModelSerializer):
     room = RoomSerializer(read_only=True)
     
