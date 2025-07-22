@@ -56,10 +56,10 @@ The **Room Finder App** is a full-stack Django web application that helps users 
 ---
 ## ⚙️ Setup Instructions
 
-### 1️⃣ Clone the Repository
+1️⃣ Clone the Repository
 ```bash
-git clone https://github.com/yourusername/roomfinder.git
-cd roomfinder
+git clone https://github.com/Bibekshah123/Room-Finder.git
+cd core
 
 2️⃣ Install Dependencies
 ```bash
@@ -78,8 +78,7 @@ python manage.py createsuperuser
 ```bash
 python manage.py runserver
 
-
-## 🛡️ Authentication Endpoints (via Djoser)
+🛡️ Authentication Endpoints (via Djoser)
 Endpoint	                            Purpose
 /api/auth/users/	                    Register
 /api/auth/jwt/create/	                    Login
