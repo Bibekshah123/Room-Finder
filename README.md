@@ -56,26 +56,26 @@ The **Room Finder App** is a full-stack Django web application that helps users 
 ---
 ## ⚙️ Setup Instructions
 
-1️⃣ Clone the Repository
-    ```bash
+1. Clone the Repository
+```bash
 git clone https://github.com/Bibekshah123/Room-Finder.git
 cd core
 
-2️⃣ Install Dependencies
-    ```bash
+2. Install Dependencies
+```bash
 pip install -r requirements.txt
 
-3️⃣ Apply Migrations
-    ```bash
+3. Apply Migrations
+```bash
 python manage.py makemigrations
 python manage.py migrate
 
-4️⃣ Create Superuser
-    ```bash
+4. Create Superuser
+```bash
 python manage.py createsuperuser
 
-5️⃣ Run Server
-    ```bash
+5. Run Server
+```bash
 python manage.py runserver
 
 ---
